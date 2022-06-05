@@ -1,34 +1,40 @@
 public class Main {
     public static void main(String[] args) {
-        Student student= Student.builder()
-                .name("Google.com")
-                .age(30)
-                .school("AlphaBet")
+        Contact contact = Contact.builder()
+                .number("444")
                 .build();
-        System.out.println(student.toString());
+        System.out.println("Contact " + contact.toString());
 
-        People people = People.builder()
-                .name("facebook.com")
-                .age(20)
+        Person person = Person.builder()
+                .number("555")
+                .name("jaja")
+                .surname("AHA")
+                .birthDate("february")
+                .gender("male")
                 .build();
-        System.out.println(people.toString());
+        System.out.println("Person " + person.toString());
+
+
+        Organization organization = Organization.builder()
+                .number("444")
+                .organizationName("pepsi")
+                .address("Poland")
+                .build();
+        System.out.println("Organization " + organization.toString());
     }
 }
 
-class People {
+class Contact {
 
-    private String name;
+    private String number;
 
-    private int age;
-
-    protected People(Builder<?> builder) {
-        this.name = builder.name;
-        this.age = builder.age;
+    protected Contact(Builder<?> builder) {
+        this.number = builder.number;
     }
 
     @Override
     public String toString() {
-        return "name: " + this.name + ", age: " + this.age;
+        return "number: " + this.number;
     }
 
     public static Builder builder() {
@@ -42,62 +48,127 @@ class People {
 
     public abstract static class Builder<T extends Builder<T>> {
 
-        private String name;
+        private String number;
 
-        private int age;
 
         public abstract T getThis();
 
-        public T name(String name) {
-            this.name = name;
+        public T number(String number) {
+            this.number = number;
             return this.getThis();
         }
 
-        public T age(int age) {
-            this.age = age;
-            return this.getThis();
-        }
 
-        public People build() {
-            return new People(this);
+        public Contact build() {
+            return new Contact(this);
         }
     }
+
 }
 
-class Student extends People {
+class Person extends Contact {
 
-    private String school;
+    private String name;
+    private String surname;
+    private String birthDate;
+    private String gender;
 
-    public Student(Builder builder) {
+    public Person(Builder builder) {
         super(builder);
-        this.school = builder.school;
+        this.name = builder.name;
+        this.surname = builder.surname;
+        this.birthDate = builder.birthDate;
+        this.gender = builder.gender;
     }
 
     @Override
     public String toString() {
-        return super.toString() + ", school: " + this.school;
+        return super.toString() + ", name: " + this.name+ ", surname: " + this.surname+ ", birthDate: " + this.birthDate+ ", gender: " + this.gender;
     }
 
     public static Builder builder() {
         return new Builder();
     }
 
-    public static class Builder extends People.Builder<Builder> {
+    public static class Builder extends Contact.Builder<Builder> {
 
-        private String school;
+        private String name;
+        private String surname;
+        private String birthDate;
+        private String gender;
 
         @Override
         public Builder getThis() {
             return this;
         }
 
-        public Builder school(String school) {
-            this.school = school;
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+        public Builder surname(String surname) {
+            this.surname = surname;
+            return this;
+        }
+        public Builder birthDate(String birthDate) {
+            this.birthDate = birthDate;
+            return this;
+        }
+        public Builder gender(String gender) {
+            this.gender = gender;
             return this;
         }
 
-        public Student build() {
-            return new Student(this);
+        public Person build() {
+            return new Person(this);
+        }
+
+    }
+}
+
+class Organization extends Contact {
+
+    private String organizationName;
+    private String address;
+
+    public Organization(Builder builder) {
+        super(builder);
+        this.organizationName = builder.organizationName;
+        this.address = builder.address;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", organizationName: " + this.organizationName+ ", address: " + this.address;
+    }
+
+
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder extends Contact.Builder<Builder> {
+
+        private String organizationName;
+        private String address;
+
+        @Override
+        public Builder getThis() {
+            return this;
+        }
+
+        public Builder organizationName(String organizationName) {
+            this.organizationName = organizationName;
+            return this;
+        }
+        public Builder address(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public Organization build() {
+            return new Organization(this);
         }
 
     }
