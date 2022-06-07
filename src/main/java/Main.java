@@ -1,22 +1,22 @@
 public class Main {
     public static void main(String[] args) {
-        Contact contact = Contact.builder()
-                .number("444")
-                .build();
-        System.out.println("Contact " + contact.toString());
+
 
         Person person = Person.builder()
                 .number("555")
+                .created("dadsa")
                 .name("jaja")
                 .surname("AHA")
                 .birthDate("february")
                 .gender("male")
                 .build();
-        System.out.println("Person " + person.toString());
+        System.out.println("Person " + person.toString() + person);
+        System.out.println();
 
 
         Organization organization = Organization.builder()
                 .number("444")
+                .created("dadsa")
                 .organizationName("pepsi")
                 .address("Poland")
                 .build();
@@ -27,14 +27,19 @@ public class Main {
 class Contact {
 
     private String number;
+    private String created;
 
     protected Contact(Builder<?> builder) {
         this.number = builder.number;
+        this.created = builder.created;
     }
 
     @Override
     public String toString() {
-        return "number: " + this.number;
+        return "Contact{" +
+                "number='" + number + '\'' +
+                ", created='" + created + '\'' +
+                '}';
     }
 
     public static Builder builder() {
@@ -46,22 +51,38 @@ class Contact {
         };
     }
 
+    public String getNumber() {
+        return number;
+    }
+
+    public String getCreated() {
+        return created;
+    }
+
     public abstract static class Builder<T extends Builder<T>> {
 
         private String number;
+        private String created;
 
 
         public abstract T getThis();
 
         public T number(String number) {
             this.number = number;
+
             return this.getThis();
         }
 
+        public T created(String created) {
+            this.created = created;
+            return this.getThis();
+        }
 
         public Contact build() {
             return new Contact(this);
         }
+
+
     }
 
 }
@@ -88,6 +109,22 @@ class Person extends Contact {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public String getGender() {
+        return gender;
     }
 
     public static class Builder extends Contact.Builder<Builder> {
